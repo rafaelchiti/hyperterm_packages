@@ -2,7 +2,7 @@
   "name": "hyperterm_plugins",
   "version": "0.0.1",
   "private": true,
-  "homepage": "/",
+  "homepage": "hyperterm_plugins",
   "devDependencies": {
     "react-scripts": "0.2.0-alpha.1"
   },
