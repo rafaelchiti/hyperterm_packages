@@ -2,8 +2,10 @@
   "name": "hyperterm_plugins",
   "version": "0.0.1",
   "dependencies": {
+    "apollo-server": "^0.1.5",
     "express": "^4.14.0",
     "got": "^6.3.0",
+    "graphql": "^0.6.2",
     "npm-keyword": "^4.2.0",
     "react": "^15.2.1",
     "react-dom": "^15.2.1"

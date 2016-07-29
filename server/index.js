@@ -1,21 +1,19 @@
 const express = require('express');
-const npmKeyword = require('npm-keyword');
-const got = require('got');
+const { apolloServer } = require('apollo-server');
+const Schema = require('./data/schema');
+const Resolvers = require('./data/resolvers');
+
+const PORT = 8080;
 
 const app = express();
 
-app.get('/plugins', (req, res) => {
-  npmKeyword('hyperterm').then((packages) => {
-    Promise.all(packages.map((package) => {
-      return got(`http://registry.npmjs.org/${package.name}`).then((response) => {
-        return JSON.parse(response.body);
-      });
-    })).then((packages) => {
-      res.send(packages);
-    });
-  });
-});
+app.use('/graphql', apolloServer({
+  graphiql: true,
+  pretty: true,
+  schema: Schema,
+  resolvers: Resolvers
+}));
 
-app.listen(3000, () => {
-  console.log('Listening on port 3000!');
+app.listen(PORT, () => {
+  console.log(`Server is now running on http://localhost:${PORT}/graphql`);
 });
