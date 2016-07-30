@@ -13,7 +13,6 @@ module.exports = {
   devtool: 'eval',
   devServer: {
     headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: 'normal'
   },
   stats: {
     colors: true
@@ -24,7 +23,8 @@ module.exports = {
     './webapp/src/index.js'
   ],
   output: {
-    filename: '[name].js',
+    publicPath: '/bundle',
+    filename: '[name].js'
   },
   module: {
     loaders: [
