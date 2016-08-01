@@ -55,21 +55,13 @@ module.exports = {
           } :
           undefined
       },
-      // Treat node modules' css as global
-      {
-        test: /.*\.css$/,
-        include: [
-          path.resolve(__dirname, '../node_modules')
-        ]
-      },
-      // The rest is local scoped css
-      {
-        test: /.*\.css$/,
-        include: [
-          path.join(rootPath, 'webapp', 'src')
-        ],
-        loader: 'css?modules!postcss'
-      }
+      { test: /.*\.css$/, loader: 'style!css?modules!postcss' },
+      { test: /\.styl$/, loader: "style!css?modules!stylus!postcss" },
+      { test: /\.png/, loader: "file-loader?mimetype=image/png" },
+      { test: /\.jpg/, loader: "file" },
+      { test: /\.gif/, loader: "file" },
+      { test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader?mimetype=application/font-woff" },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   },
   postcss: function() {
@@ -77,7 +69,7 @@ module.exports = {
   },
   resolve: {
     root: rootPath,
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['', '.js', '.jsx', '.json', '.css', '.styl']
   },
   plugins: [
     // Prevent showing lint errors
