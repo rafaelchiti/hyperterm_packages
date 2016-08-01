@@ -5,7 +5,34 @@
     "express": "^4.14.0",
     "got": "^6.3.0",
     "npm-keyword": "^4.2.0",
+    "babel-core": "^6.11.4",
     "react": "^15.2.1",
     "react-dom": "^15.2.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.7",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-1": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "eslint": "^3.2.0",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "html-webpack-plugin": "^2.22.0",
+    "json-loader": "^0.5.4",
+    "postcss-loader": "^0.9.1",
+    "react-transform-catch-errors": "^1.0.2",
+    "react-transform-hmr": "^1.0.4",
+    "redbox-react": "^1.2.10",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-notifier": "^1.3.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js  --hot --progress --port 4001"
   }
 }
