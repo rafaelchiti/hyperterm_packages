@@ -4,7 +4,7 @@ var fs = require('fs');
 var webpack = require('webpack');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var autoprefixer = require('autoprefixer');
-var HtmlWebpackPlugin     = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 var rootPath = path.join(__dirname, './');
@@ -15,18 +15,19 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   devServer: {
     headers: { 'Access-Control-Allow-Origin': '*' },
+    noInfo: true
   },
   stats: {
     colors: true
   },
   entry: {
     app: [
-      'webpack-dev-server/client?http://localhost:4001',
-      'webpack/hot/only-dev-server',
+      'webpack-hot-middleware/client',
       './webapp/index.js'
     ]
   },
   output: {
+    path: path.join(__dirname, 'dist'),
     publicPath: '/bundle',
     filename: '[name].js'
   },
@@ -72,6 +73,8 @@ module.exports = {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.styl']
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     // Prevent showing lint errors
     new webpack.NoErrorsPlugin(),
     new WebpackNotifierPlugin(),
