@@ -23,7 +23,7 @@ module.exports = {
     app: [
       'webpack-dev-server/client?http://localhost:4001',
       'webpack/hot/only-dev-server',
-      './webapp/src/index.js'
+      './webapp/index.js'
     ]
   },
   output: {
@@ -34,7 +34,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: [path.join(rootPath, 'webapp', 'src')],
+        include: [path.join(rootPath, 'webapp')],
         exclude: /node_modules/,
         loader: 'babel',
         query: env === 'development' ?
