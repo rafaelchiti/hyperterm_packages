@@ -13,8 +13,8 @@ export default class HypertermPackage extends Component {
     return (
       <div className={styles.box}>
         <TerminalControls />
-        <h1>{this.props.item.name}</h1>
-        <h2>{this.props.item.description}</h2>
+        <h1 className={styles.title}>{this.props.item.name}</h1>
+        <h2 className={styles.subtitle}>{this.props.item.description}</h2>
       </div>
     );
   }
