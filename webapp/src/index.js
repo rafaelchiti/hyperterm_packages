@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <div>Icon <span className="glyphicon glyphicon-search"></span></div>
-    )
+    );
   }
 }
 
