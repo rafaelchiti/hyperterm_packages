@@ -1,4 +1,7 @@
-{
+// Doing this so that updates to this file are picked up and not cached.
+delete require.cache[require.resolve('./schema.json')]
+
+module.exports = {
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -21,7 +24,8 @@
 
   "plugins": [
     "react",
-    "classes"
+    "classes",
+    "graphql"
   ],
 
   "rules": {
@@ -114,6 +118,12 @@
         "/^render.+$/",
         "render"
       ]
+    }],
+
+    "graphql/template-strings": ['error', {
+      env: 'apollo',
+
+      schemaJson: require("./schema.json")
     }]
   }
-}
+};

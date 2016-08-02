@@ -1,10 +1,10 @@
 const npmKeyword = require('npm-keyword');
 const got = require('got');
 
-const findPlugins = () => {
+const findPackages = () => {
   return npmKeyword('hyperterm').then((packages) => {
-    return Promise.all(packages.map((package) => {
-      return got(`http://registry.npmjs.org/${package.name}`).then((response) => {
+    return Promise.all(packages.map((pkg) => {
+      return got(`http://registry.npmjs.org/${pkg.name}`).then((response) => {
         return JSON.parse(response.body);
       });
     }));
@@ -13,11 +13,11 @@ const findPlugins = () => {
 
 const resolvers = {
   Query: {
-    plugins(root, args) {
-      return findPlugins();
+    packages(root, args) {
+      return findPackages();
     }
   },
-  Plugin: {
+  Package: {
     id(root) {
       return root._id;
     }

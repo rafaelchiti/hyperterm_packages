@@ -1,30 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-apollo';
+import gql from 'graphql-tag';
 import HypertermPackagesList from 'webapp/views/hyperterm_packages_list';
 import styles from './styles';
 
-export default class App extends Component {
+
+class App extends Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      loading: PropTypes.bool,
+      packages: PropTypes.array
+    })
+  }
   render() {
+    const { loading, packages } = this.props.data;
     return (
       <div className={styles.appContainer}>
-        <HypertermPackagesList
-          items={items}
-        />
+        {loading && 'Loading...'}
+        {!loading && <HypertermPackagesList items={packages} />}
       </div>
     );
   }
 }
 
+function mapQueriesToProps() {
+  return {
+    data: {
+      query: gql`
+        query {
+          packages {
+            id,
+            name,
+            description,
+            homepage
+          }
+        }
+      `
+    }
+  };
+}
 
-
-const items = [
-  {
-    name: 'hyperterm-material',
-    githubUrl: 'github.com/dperrera/hyperterm-material',
-    description: 'A material inspired theme for hyperterm.'
-  },
-  {
-    name: 'hyperterm-dibdabs',
-    githubUrl: 'https://github.com/supercrabtree/hyperterm-dibdabs',
-    description: 'Add dibdabs to your hyperterm tabs'
-  }
-];
+export default connect({
+  mapQueriesToProps
+})(App);
