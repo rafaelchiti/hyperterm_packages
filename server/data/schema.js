@@ -1,12 +1,12 @@
 const typeDefinitions = `
-type Plugin {
+type Package {
   id: String!
   name: String!
   description: String
   homepage: String
 }
 type Query {
-  plugins: [Plugin]
+  packages: [Package]
 }
 schema {
   query: Query
