@@ -12,7 +12,7 @@ var env = process.env.NODE_ENV || 'development';
 
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: env === 'development' ? 'cheap-module-eval-source-map' : 'source-map',
   devServer: {
     headers: { 'Access-Control-Allow-Origin': '*' },
     noInfo: true
@@ -22,13 +22,13 @@ module.exports = {
   },
   entry: {
     app: [
-      'webpack-hot-middleware/client',
+      env === 'development' && 'webpack-hot-middleware/client',
       './webapp/index.js'
-    ]
+    ].filter(Boolean)
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: '/bundle',
+    path: path.join(__dirname, 'build'),
+    publicPath: '/',
     filename: '[name].js'
   },
   module: {
@@ -73,10 +73,15 @@ module.exports = {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.styl']
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     // Prevent showing lint errors
     new webpack.NoErrorsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    env === 'development' && new webpack.HotModuleReplacementPlugin(),
+    env !== 'development' && new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
     new WebpackNotifierPlugin(),
     new HtmlWebpackPlugin({
       template: "./webapp/assets/index.template.html"
@@ -87,7 +92,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(env)
       }
     }),
-  ]
+  ].filter(Boolean)
 };
 
 

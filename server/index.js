@@ -17,9 +17,9 @@ app.use('/graphql', apolloServer({
 if (process.env.NODE_ENV !== 'production') {
   const devServer = require('./dev_server');
   devServer(app);
+} else {
+  app.use('/', express.static('build'));
 }
-
-app.use('/public', express.static('public'));
 
 app.listen(PORT, () => {
   console.log(`Server is now running on http://localhost:${PORT}/graphql`);
