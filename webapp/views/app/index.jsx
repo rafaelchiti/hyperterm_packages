@@ -1,23 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-apollo';
 import gql from 'graphql-tag';
-import HypertermPackagesList from 'webapp/views/hyperterm_packages_list';
+import ListScreen from 'webapp/views/list_screen';
 import styles from './styles';
 
 
 class App extends Component {
+
   static propTypes = {
     data: PropTypes.shape({
       loading: PropTypes.bool,
       packages: PropTypes.array
     })
   }
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const { loading, packages } = this.props.data;
+
     return (
       <div className={styles.appContainer}>
         {loading && 'Loading...'}
-        {!loading && <HypertermPackagesList items={packages} />}
+        {!loading && <ListScreen packages={packages} />}
       </div>
     );
   }

@@ -68,7 +68,6 @@ module.exports = {
     "no-unused-expressions": 2,
     "object-curly-spacing": [2, "always"],
     "prefer-const": [2],
-    "padded-blocks": [2, "never"],
     "quotes": [2, "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
     "quote-props": [2, "as-needed"],
     "space-in-parens": [2, "never"],
