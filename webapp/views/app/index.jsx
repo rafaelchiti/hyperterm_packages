@@ -39,7 +39,9 @@ function mapQueriesToProps() {
             id,
             name,
             description,
-            homepage
+            homepage,
+            keywords,
+            author
           }
         }
       `

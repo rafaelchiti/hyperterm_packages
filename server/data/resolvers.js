@@ -20,6 +20,10 @@ const resolvers = {
   Package: {
     id(root) {
       return root._id;
+    },
+
+    author(root) {
+      return root.author && root.author.name;
     }
   }
 };

@@ -3,7 +3,9 @@ type Package {
   id: String!
   name: String!
   description: String
-  homepage: String
+  homepage: String,
+  author: String,
+  keywords: [String]!
 }
 type Query {
   packages: [Package]
