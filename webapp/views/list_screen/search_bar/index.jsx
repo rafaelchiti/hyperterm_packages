@@ -6,12 +6,13 @@ export default class SearchBar extends React.Component {
 
   static propTypes = {
     term: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    totalPackages: PropTypes.number
   }
 
   render() {
     return (
-      <input placeholder="find package..." className={styles.input} type="text" value={this.props.term} onChange={this.props.onChange} />
+      <input placeholder={`search ${this.props.totalPackages} packages`} className={styles.input} type="text" value={this.props.term} onChange={this.props.onChange} />
     );
   }
 }

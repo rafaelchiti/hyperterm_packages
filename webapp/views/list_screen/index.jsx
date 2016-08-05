@@ -35,7 +35,7 @@ export default class ListScreen extends Component {
     return (
       <div>
         <div className={styles.searchBarContainer}>
-          <SearchBar term={this.state.searchTerm} onChange={this.handleSearchTermChange.bind(this)} />
+          <SearchBar totalPackages={this.props.packages.length} term={this.state.searchTerm} onChange={this.handleSearchTermChange.bind(this)} />
         </div>
         <HypertermPackagesList items={this.getPackages()} />
       </div>
