@@ -7,37 +7,26 @@ import styles from './styles';
 export default class ListScreen extends Component {
 
   static propTypes = {
-    packages: PropTypes.array
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      searchTerm: ''
-    };
-  }
-
-  getPackages() {
-    const { packages } = this.props;
-    const { searchTerm } = this.state;
-
-    if (searchTerm === '') return packages;
-
-    return packages.filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  }
-
-  handleSearchTermChange(event) {
-    this.setState({ searchTerm: event.target.value });
+    packages: PropTypes.array,
+    loadingPackages: PropTypes.bool,
+    searchTerm: PropTypes.string,
+    onSearchTermChange: PropTypes.func.isRequired
   }
 
   render() {
     return (
       <div>
         <div className={styles.searchBarContainer}>
-          <SearchBar totalPackages={this.props.packages.length} term={this.state.searchTerm} onChange={this.handleSearchTermChange.bind(this)} />
+          <SearchBar
+            totalPackages={this.props.loadingPackages ? 0 : this.props.packages.length}
+            term={this.props.searchTerm}
+            onChange={this.props.onSearchTermChange}
+          />
         </div>
-        <HypertermPackagesList items={this.getPackages()} />
+        {this.props.loadingPackages && 'Loading...'}
+        {!this.props.loadingPackages &&
+          <HypertermPackagesList items={this.props.packages} />
+        }
       </div>
     );
   }

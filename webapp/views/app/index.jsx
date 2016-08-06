@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-apollo';
 import gql from 'graphql-tag';
+import debounce from 'lodash/debounce';
 import ListScreen from 'webapp/views/list_screen';
 import styles from './styles';
 
@@ -16,6 +17,22 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      searchTerm: ''
+    };
+
+    this.search = debounce(this.search, 200);
+  }
+
+  handleSearchTermChange(event) {
+    const searchTerm = event.target.value;
+    this.setState({ searchTerm });
+    this.search(searchTerm);
+  }
+
+  search(term) {
+    this.props.data.refetch({ term });
   }
 
   render() {
@@ -23,8 +40,12 @@ class App extends Component {
 
     return (
       <div className={styles.appContainer}>
-        {loading && 'Loading...'}
-        {!loading && <ListScreen packages={packages} />}
+        <ListScreen
+          packages={packages}
+          loadingPackages={loading}
+          searchTerm={this.state.searchTerm}
+          onSearchTermChange={this.handleSearchTermChange.bind(this)}
+        />
       </div>
     );
   }
@@ -34,8 +55,8 @@ function mapQueriesToProps() {
   return {
     data: {
       query: gql`
-        query {
-          packages {
+        query getPackages($term: String!) {
+          packages(term: $term) {
             id,
             name,
             description,
@@ -44,7 +65,10 @@ function mapQueriesToProps() {
             author
           }
         }
-      `
+      `,
+      variables: {
+        term: '',
+      }
     }
   };
 }

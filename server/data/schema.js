@@ -8,7 +8,7 @@ type Package {
   keywords: [String]!
 }
 type Query {
-  packages: [Package]
+  packages(term: String): [Package]
 }
 schema {
   query: Query

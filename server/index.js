@@ -1,18 +1,11 @@
 const express = require('express');
-const { apolloServer } = require('apollo-server');
-const Schema = require('./data/schema');
-const Resolvers = require('./data/resolvers');
+const graphQLServer = require('./graphql_server');
 
 const PORT = 4001;
 
 const app = express();
 
-app.use('/graphql', apolloServer({
-  graphiql: true,
-  pretty: true,
-  schema: Schema,
-  resolvers: Resolvers
-}));
+graphQLServer(app);
 
 if (process.env.NODE_ENV !== 'production') {
   const devServer = require('./dev_server');

@@ -1,31 +1,13 @@
-const npmKeyword = require('npm-keyword');
-const got = require('got');
+const { Package } = require('./models');
 
-const findPackages = () => {
-  return npmKeyword('hyperterm').then((packages) => {
-    return Promise.all(packages.map((pkg) => {
-      return got(`http://registry.npmjs.org/${pkg.name}`).then((response) => {
-        return JSON.parse(response.body);
-      });
-    }));
-  });
-};
-
-const resolvers = {
+module.exports = {
   Query: {
-    packages(root, args) {
-      return findPackages();
+    packages(root, { term }) {
+      return Package.search(term);
     }
   },
   Package: {
-    id(root) {
-      return root._id;
-    },
-
-    author(root) {
-      return root.author && root.author.name;
-    }
+    id: (pkg) => pkg._id,
+    author: (pkg) => pkg.author && pkg.author.name
   }
 };
-
-module.exports = resolvers;

@@ -8,9 +8,13 @@ export default class HypertermPackagesList extends Component {
     items: PropTypes.array
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.items !== nextProps.items;
+  }
+
   render() {
-    const children = this.props.items.map((item, i) => (
-      <div key={i} className={styles.listItem}>
+    const children = this.props.items.map((item) => (
+      <div key={item.id} className={styles.listItem}>
         <HypertermPackage item={item} />
       </div>
     ));
