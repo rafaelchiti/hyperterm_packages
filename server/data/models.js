@@ -24,7 +24,10 @@ const searchPackages = (term, packages) => {
   }
 
   return packages.filter((pkg) =>
-    pkg.name.toLowerCase().includes(term.toLowerCase())
+    // Search by term being included in the name, or in keywords
+    [pkg.name].concat(pkg.keywords).some((candidate) =>
+      candidate.toLowerCase().includes(term.toLowerCase())
+    )
   );
 };
 
