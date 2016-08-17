@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-apollo';
 import gql from 'graphql-tag';
 import debounce from 'lodash/debounce';
+import TopMenu from './top_menu';
 import ListScreen from 'webapp/views/list_screen';
 import styles from './styles';
 
@@ -40,6 +41,7 @@ class App extends Component {
 
     return (
       <div className={styles.appContainer}>
+        <TopMenu />
         <ListScreen
           packages={packages}
           loadingPackages={loading}
