@@ -10,7 +10,7 @@ export default class HypertermPackage extends Component {
   }
 
   render() {
-    return (
+    const el = (
       <div className={styles.box}>
         <TerminalControls />
         <h1 className={styles.title}>{this.props.item.name}</h1>
@@ -18,10 +18,24 @@ export default class HypertermPackage extends Component {
         <Keywords keywords={this.props.item.keywords} />
         <div className={styles.userRepoInfoBox}>
           <span className={styles.author}>{this.props.item.author}</span>
-          <a href={this.props.item.homepage} className={styles.homePageLink}>{this.props.item.homepage}</a>
         </div>
       </div>
     );
+
+    if (this.props.item.homepage) {
+      return (
+        <a
+          href={this.props.item.homepage}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.homepageLink}
+        >
+          {el}
+        </a>
+      );
+    }
+
+    return el;
   }
 }
 
