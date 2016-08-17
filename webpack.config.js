@@ -84,7 +84,8 @@ module.exports = {
     }),
     new WebpackNotifierPlugin(),
     new HtmlWebpackPlugin({
-      template: "./webapp/assets/index.template.html"
+      template: "./webapp/assets/index.template.html",
+      environment: env
     }),
     new webpack.DefinePlugin({
       'process.env': {
