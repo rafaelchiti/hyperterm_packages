@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import debounce from 'lodash/debounce';
 import TopMenu from './top_menu';
@@ -12,7 +12,8 @@ class App extends Component {
   static propTypes = {
     data: PropTypes.shape({
       loading: PropTypes.bool,
-      packages: PropTypes.array
+      packages: PropTypes.array,
+      refetch: PropTypes.func
     })
   }
 
@@ -26,15 +27,16 @@ class App extends Component {
     this.search = debounce(this.search, 200);
   }
 
+  search(term) {
+    this.props.data.refetch({ term });
+  }
+
   handleSearchTermChange(event) {
     const searchTerm = event.target.value;
     this.setState({ searchTerm });
     this.search(searchTerm);
   }
 
-  search(term) {
-    this.props.data.refetch({ term });
-  }
 
   render() {
     const { loading, packages } = this.props.data;
@@ -53,28 +55,17 @@ class App extends Component {
   }
 }
 
-function mapQueriesToProps() {
-  return {
-    data: {
-      query: gql`
-        query getPackages($term: String!) {
-          packages(term: $term) {
-            id,
-            name,
-            description,
-            homepage,
-            keywords,
-            author
-          }
-        }
-      `,
-      variables: {
-        term: '',
-      }
+export default graphql(gql`
+  query getPackages($term: String!) {
+    packages(term: $term) {
+      id,
+      name,
+      description,
+      homepage,
+      keywords,
+      author
     }
-  };
-}
-
-export default connect({
-  mapQueriesToProps
+  }
+`, {
+  options: () => ({ variables: { term: '' } })
 })(App);
